@@ -1,0 +1,86 @@
+library-service/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── .idea/
+│   ├── .gitignore
+│   └── workspace.xml
+├── cmd/
+│   └── library/
+│       └── main.go
+├── db/
+│   └── migrations/
+│       ├── 000001_library.down.sql
+│       ├── 000001_library.up.sql
+│       └── embed.go
+├── docs/
+│   ├── curl-examples.md
+│   ├── design.md
+│   ├── directory-tree.txt
+│   ├── embed.go
+│   ├── openapi.json
+│   ├── swagger.html
+│   └── verification.md
+├── internal/
+│   ├── app/
+│   │   ├── app.go
+│   │   └── migrate.go
+│   ├── config/
+│   │   ├── config.go
+│   │   └── config_test.go
+│   ├── domain/
+│   │   ├── error.go
+│   │   └── model.go
+│   ├── httpapi/
+│   │   ├── auth.go
+│   │   ├── books.go
+│   │   ├── comments.go
+│   │   ├── contract_test.go
+│   │   ├── dto.go
+│   │   ├── middleware.go
+│   │   ├── middleware_test.go
+│   │   ├── response.go
+│   │   ├── router.go
+│   │   └── users.go
+│   ├── integration/
+│   │   ├── http_test.go
+│   │   ├── repositories_test.go
+│   │   ├── sessions_test.go
+│   │   └── setup_test.go
+│   ├── security/
+│   │   ├── password.go
+│   │   ├── password_test.go
+│   │   ├── token.go
+│   │   └── token_test.go
+│   ├── service/
+│   │   ├── auth.go
+│   │   ├── auth_test.go
+│   │   ├── book.go
+│   │   ├── comment.go
+│   │   ├── library_test.go
+│   │   ├── user.go
+│   │   ├── user_test.go
+│   │   └── validation.go
+│   ├── store/
+│   │   ├── books.go
+│   │   ├── comments.go
+│   │   ├── interactions.go
+│   │   ├── locks.go
+│   │   ├── postgres.go
+│   │   ├── sessions.go
+│   │   └── users.go
+│   └── telemetry/
+│       └── telemetry.go
+├── scripts/
+│   ├── generate_openapi.py
+│   └── smoke.sh
+├── .dockerignore
+├── .env.example
+├── .gitignore
+├── .golangci.yml
+├── Dockerfile
+├── Makefile
+├── README.md
+├── docker-compose.yml
+├── go.mod
+└── go.sum

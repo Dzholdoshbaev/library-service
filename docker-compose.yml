@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-library}
+      POSTGRES_USER: ${DB_USER:-library}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:${POSTGRES_HOST_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+  migrate:
+    build: .
+    image: library-service:local
+    env_file: .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+    command: ["migrate", "up"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+  library-service:
+    build: .
+    image: library-service:local
+    env_file: .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      HTTP_HOST: 0.0.0.0
+      HTTP_PORT: 8080
+      GIN_MODE: release
+    ports:
+      - "127.0.0.1:${HTTP_PORT:-8080}:8080"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    stop_grace_period: 25s
+    restart: unless-stopped
+volumes:
+  postgres_data:
